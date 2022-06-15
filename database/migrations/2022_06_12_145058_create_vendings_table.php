@@ -11,15 +11,16 @@ return new class extends Migration
      *
      * @return void
      */
+    protected $table = 'vendings';
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+        Schema::create('vending', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('商品名',100);
+            $table->string('画像');
+            $table->string('価格');
+            $table->string('在庫数');
+            $table->text('メーカー名');
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('vendings');
     }
 };

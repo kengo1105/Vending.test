@@ -22,3 +22,5 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+Route::get('/list', 'App/Http/Controllers/ArticleController@showList')->name('list');
+Route::get('/vending', 'App/Http/Controllers/VendingController@showList')->name('vending');
