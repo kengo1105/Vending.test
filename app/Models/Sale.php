@@ -6,13 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class Vending extends Model
+class Sale extends Model
 {
-    public function getList() {
-        
-        $vendings = DB::table('vendings')->get();
-        return $vendings;
-        
+    public function products() {
+        return $this->hasMany("App\Product");
     }
-
 }

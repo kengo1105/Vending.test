@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vending', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('商品名',100);
-            $table->string('画像');
-            $table->string('価格');
-            $table->string('在庫数');
-            $table->text('メーカー名');
+        Schema::create('companies', function (Blueprint $table) {
+            $table->id();
+            $table->string('company_name');
+            $table->string('street_address');
+            $table->string('representative_name');
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vendings');
+        Schema::dropIfExists('companies');
     }
 };
