@@ -18,11 +18,10 @@
                     {{ $company_name }}
                     </option>  
                     @endforeach
-                    
                 </select>    
             </div>
         <button class="btn btn-primary" type="submit">検索</button>
-        <button type="submit" onclick="location.href='./form'">新規登録</button>
+        <button type="submit" onclick="location.href='./item.create'">新規登録</button>
     </form>
         
     

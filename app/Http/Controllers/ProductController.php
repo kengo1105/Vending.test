@@ -20,16 +20,27 @@ class ProductController extends Controller
         return view('regist');
     }
 
+    public function createForm() {
+        return view('products/create');
+    }
+
+    // public function index()
+    // {
+    //     return view('product/index');
+    // }
+
     public function index()
     {
-        return view('product.index');
+        $companies = Company::all();
+        return view('company.index',compact('company'));
     }
 
     public function create(Request $request)
     {
-        return view('product.create');
+        return view('product/create');
     }
 
+    
     public function store(Request $request)
     {
         $img = $request->file('img_path');

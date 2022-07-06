@@ -27,10 +27,12 @@ Route::controller(ProductController::class)->group(function() {
 
     Route::get('/product', 'showList');
     Route::get('/', [ProductController::class, 'index'])->name('item.index');
-    Route::get('/create', [ProductController::class, 'create'])->name('item.create');
+    Route::get('/products/create', [ProductController::class, 'createForm'])->name('create');
     Route::post('/store', [ProductController::class, 'store'])->name('item.store');
     Route::get('/', 'showList')->name('form');
     Route::get('/regist',[ProductController::class, 'showRegistForm']);
+    // 検索フォーム
     Route::get('show', [ProductController::class, 'show'])->name('show');
+    // 検索結果
     Route::get('searchproduct', [ProductController::class, 'search'])->name('searchproduct');
  });

@@ -1,4 +1,4 @@
-@extends('vending')
+@extends('layouts.template')
 @section('title','商品情報登録')
 @section('content')
 <form action="{{ route('item.store') }}" method="POST" enctype="multipart/form-data">
