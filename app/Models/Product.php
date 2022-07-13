@@ -10,7 +10,10 @@ class Product extends Model
 {
     public function getList() {
         
-        $products = DB::table('products')->get();
+        $products = DB::table('products')
+                ->join('companies', 'products.company_id', '=', 'companies.id')
+                ->get();
+
         return $products;
         
     }

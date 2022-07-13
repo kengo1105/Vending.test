@@ -12,8 +12,12 @@ class ProductController extends Controller
         $model = new Product();
 
         $products = $model->getList();
+        $companies = Company::all();
 
-        return view('/products/list', ['products' => $products]);
+        return view('/products/list', [
+            'products' => $products, 
+            'companies' => $companies
+        ]);
     }
 
     public function showRegistForm() {
@@ -21,44 +25,32 @@ class ProductController extends Controller
     }
 
     public function createForm() {
-        return view('products/create');
+        return view('/products/create');
     }
-
-    // public function index()
-    // {
-    //     return view('product/index');
-    // }
 
     public function index()
     {
-        $companies = Company::all();
-        return view('company.index',compact('company'));
+        return view('/products/index');
     }
 
-    public function create(Request $request)
-    {
-        return view('product/create');
-    }
+    // public function create(Request $request)
+    // {
+    //     return view('/products/create');
+    // }
 
     
-    public function store(Request $request)
+    public function upload(Request $request)
     {
-        $img = $request->file('img_path');
-        // 画像情報がセットされていれば、保存処理を実行
-        if (isset($img)) {
-            // storage > public > img配下に画像が保存される
-            $path = $img->store('img','public');
-            // store処理が実行できたらDBに保存処理を実行
-            if ($path) {
-                // DBに登録する処理
-                Product::create([
-                    'img_path' => $path,
-                ]);
-            }
-        }
+        $dir = 'storage';
+        $file_name = $request->file('img_path')->getClientOriginalName();
+        $request->file('img_path')->storeAs('public/'. $dir, $file_name);
 
+        // ファイル情報をDBに保存
+        $image = new Product();
+        $image->img_path = 'storage/' . $dir . '/' . $file_name;
+        $image->save();
         //　リダイレクト
-        return redirect()->route('item.index');
+        return redirect('/');
     }
 
     public function show(Request $request)
@@ -92,7 +84,7 @@ class ProductController extends Controller
         }
 
         //$queryをcategory_idの昇順に並び替えて$productsに代入
-        $products = $query->orderBy('company_id', 'asc')->paginate(4);
+        $products = $query->orderBy('company_id', 'asc')->paginate(10);
 
         //m_categoriesテーブルからgetLists();関数でcategory_nameとidを取得する
         $company = new Company;
@@ -102,21 +94,11 @@ class ProductController extends Controller
             'products' => $products,
             'companies' => $companies,
             'searchWord' => $searchWord,
-            '$companyId' => $companyId
+            'companyId' => $companyId
         ]);
     }
     public static function escapeLike($str)
     {
         return str_replace(['\\', '%', '_'], ['\\\\', '\%', '\_'], $str);
     }
-        // $posts = Post::where('title', 'like', "%{$request->search}%")
-                // ->orWhere('content', 'like', "%{$request->search}%")
-                // ->paginate(3);
-
-        // return view('searchproduct', [
-        //     'posts' => $posts,
-        //     'search_result' => $search_result,
-        //     'search_query'  => $request->search
-        // ]);
-    
 }

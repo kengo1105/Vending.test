@@ -8,20 +8,20 @@
     <title>@yield('title')</title>
 </head>
 <body>
+<script src="{{ asset('/js/common.js') }}"></script>
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <x-dropdown-link :href="route('logout')"
+                onclick="event.preventDefault();
+                    this.closest('form').submit();">
+            ログアウト
+        </x-dropdown-link>
+    </form>
     <header>
         <h1 class="headline">
             <a>自動販売機</a>
         </h1>
-        <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                        ログアウト
-                    </x-responsive-nav-link>
-                </form>
-    </header>    
+    </header>
     <div class="container">
         @yield('content')
     </div>

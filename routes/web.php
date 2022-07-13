@@ -29,6 +29,7 @@ Route::controller(ProductController::class)->group(function() {
     Route::get('/', [ProductController::class, 'index'])->name('item.index');
     Route::get('/products/create', [ProductController::class, 'createForm'])->name('create');
     Route::post('/store', [ProductController::class, 'store'])->name('item.store');
+    Route::post('/upload', [ProductController::class, 'upload'])->name('store');
     Route::get('/', 'showList')->name('form');
     Route::get('/regist',[ProductController::class, 'showRegistForm']);
     // 検索フォーム

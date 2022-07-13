@@ -21,12 +21,12 @@
                 </select>
             </div>
             <div>
-                <button class="btn btn-primary" type="submit">検索</button>      
+                <button class="btn btn-primary" type="submit">検索</button>
             </div>
         </form>
         <a class="button" href="{{ route('create') }}">新規登録</a>
         <div class="content">
-                @if (!empty($products))
+            @if (!empty($products))
             <div class="productTable">
                 <p>全{{ $products->count() }}件</p>
             <table class="table table-hover">
@@ -39,23 +39,25 @@
                     <th>在庫数</th>
                     <th>メーカー名</th>
                     <th></th>
+                    <th></th>
                 </tr>
                 </thead>
                 @foreach($products as $product)
                 <tr>
                     <td>{{ $product->id }}</td>
-                    <td>{{ $product->product_name }}</td>                    
+                    <td>{{ $product->product_name }}</td>
                     <td><img src="{{ Storage::url($product->img_path) }}"></td>
                     <td>{{ $product->price }}</td>
                     <td>{{ $product->stock }}</td>
                     <td>{{ $product->company->company_name }}</td>
                     <td><a href="#" class="btn btn-primary btn-sm">商品詳細</a></td>
+                    <td><input type="submit" class="delbtn" value="削除"></td>
                 </tr>
                 @endforeach
             </table>
-            </div> 
-            @endif    
+            </div>
+            @endif
         </div>
-    </div>    
+    </div>
 </div>
 @endsection
