@@ -8,16 +8,20 @@ use App\Models\Company;
 
 class ProductController extends Controller
 {
-    public function showList() {
-        $model = new Product();
-
-        $products = $model->getList();
-        $companies = Company::all();
+    public function showList(Request $request) {
+        
+        $product_model = new Product();
+        $products = $product_model->getList($request);
+        $company_model = new Company;
+        $companies = $company_model->getList();
+        // $companies = Company::all();
+        // dd($request);
 
         return view('/products/list', [
-            'products' => $products, 
+            'products' => $products,
             'companies' => $companies
         ]);
+        
     }
 
     public function showRegistForm() {
@@ -39,22 +43,20 @@ class ProductController extends Controller
     // }
 
     
-    public function upload(Request $request)
-    {
+    public function upload(Request $request) {
         $dir = 'storage';
-        $file_name = $request->file('img_path')->getClientOriginalName();
-        $request->file('img_path')->storeAs('public/'. $dir, $file_name);
+        $file_name = $request->file('image')->getClientOriginalName();
+        $request->file('image')->storeAs('public/'. $dir, $file_name);
 
         // ファイル情報をDBに保存
         $image = new Product();
         $image->img_path = 'storage/' . $dir . '/' . $file_name;
         $image->save();
         //　リダイレクト
-        return redirect('/');
+        return redirect('/products');
     }
 
-    public function show(Request $request)
-    {
+    public function show(Request $request) {
         $company = new Company;
         $companies = $company->getLists();
         $searchWord = $request->input('searchWord');
@@ -67,8 +69,7 @@ class ProductController extends Controller
         ]);
     }
 
-    public function search(Request $request)
-    {
+    public function search(Request $request) {
         //入力される値nameの中身を定義する
         $searchWord = $request->input('searchWord'); //商品名の値
         $companyId = $request->input('companyId'); //カテゴリの値
@@ -88,7 +89,7 @@ class ProductController extends Controller
 
         //m_categoriesテーブルからgetLists();関数でcategory_nameとidを取得する
         $company = new Company;
-        $companies = $company->getLists();
+        $companies = $company->getList();
 
         return view('/products/list', [
             'products' => $products,

@@ -4,18 +4,18 @@
 <div class="row">
         <h1>商品一覧</h1>
     <div class="container">
-        <form form method="GET" action="{{ route('searchproduct')}}">
+        <form form method="GET" action="{{ route('products.list') }}">
             <div class="form-group">
                 <label for="title">商品名</label>
-                <input type="text" class="form-control" id="title" name="searchWord" placeholder="商品名">
+                <input type="text" class="form-control" id="title" name="product_name" placeholder="商品名" value="{{ old('product_name') }}">
             </div>
             <div class="form-group row">
                 <label for="company_id">メーカー名</label>
-                <select name="companyId" class="form-control" value="{ $companyId }">
+                <select name="company_id" class="form-control">
                     <option value="">未選択</option>
-                    @foreach($companies as $id => $company_name)
-                    <option value="{{ $id }}">
-                    {{ $company_name }}
+                    @foreach($companies as $company)
+                    <option value="{{ $company->id }}">
+                    {{ $company->company_name }}
                     </option>
                     @endforeach
                 </select>
@@ -49,7 +49,7 @@
                     <td><img src="{{ Storage::url($product->img_path) }}"></td>
                     <td>{{ $product->price }}</td>
                     <td>{{ $product->stock }}</td>
-                    <td>{{ $product->company->company_name }}</td>
+                    <td>{{ $product->company_name }}</td>
                     <td><a href="#" class="btn btn-primary btn-sm">商品詳細</a></td>
                     <td><input type="submit" class="delbtn" value="削除"></td>
                 </tr>

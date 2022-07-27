@@ -33,7 +33,7 @@
             <textarea class="form-control" id="comment" name="comment" placeholder="Comment"></textarea>
         </div>
 
-        <input type="file" name="img_path">
+        <input type="file" name="image">
         <input type="submit" value="アップロード">
 </form>
 @endsection('content')

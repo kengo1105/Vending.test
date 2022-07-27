@@ -8,16 +8,18 @@ use Illuminate\Support\Facades\DB;
 
 class Company extends Model
 {
-    public function getLists()
-    {
-        $companies = DB::table('companies')
-        ->join('products', 'products.company_id', '=', 'companies.id')
-        ->get();
-        $companies = Company::pluck('company_name', 'id');
+    protected $fillable = [
+        'company_name',
+        'street_address',
+        'representative_name',
+    ];
 
-        return $companies;
+    public function getList() {
+        $companies = DB::table('companies');
+
+        return $companies->get();
     }
-
+    
     public function products() {
         return $this->hasMany(Product::class);
     }

@@ -25,7 +25,7 @@ Route::get('/dashboard', function () {
 
 Route::controller(ProductController::class)->group(function() {
 
-    Route::get('/product', 'showList');
+    Route::get('/products', [ProductController::class, 'showList'])->name('products.list');
     Route::get('/', [ProductController::class, 'index'])->name('item.index');
     Route::get('/products/create', [ProductController::class, 'createForm'])->name('create');
     Route::post('/store', [ProductController::class, 'store'])->name('item.store');
