@@ -1,24 +1,65 @@
 header {background-color: rgb(221, 211, 211);
 }
+table {
+  width: 100%;
+}
+th {
+  width: 10%;
+  padding       : 5px 5px;
+  margin        : 5px 5px;
+}
+td {
+  width: 10%;
+  height: 50%;
+}
+.style-label {
+  background-color: #ffd900
+}
+.row {
+  width: 70%;
+}
+.container {
+  width: 100%;
+}
 .button {
+  display       : inline-block;
+  border-radius : 10%;
+  font-size     : 10pt;
+  text-align    : right;
+  cursor        : pointer;
+  padding       : 12px 12px;
+  margin        : 5px 5px;
+  background    : hsl(209, 91%, 35%);
+  color         : #ffffff;
+  line-height   : 1em;
+  transition    : .3s;
+  box-shadow    : 6px 6px 3px #666666;
+  border        : 2px solid #000066;
+}
+.button:hover {
+  box-shadow    : none;
+  color         : #367ba3;
+  background    : #ffffff;
+}
+.button2 {
     display       : inline-block;
-    border-radius : 10%;          /* 角丸       */
-    font-size     : 10pt;        /* 文字サイズ */
-    text-align    : center;      /* 文字位置   */
-    cursor        : pointer;     /* カーソル   */
-    padding       : 12px 12px;   /* 余白       */
+    border-radius : 10%;
+    font-size     : 10pt;
+    text-align    : right;
+    cursor        : pointer;
+    padding       : 12px 12px;
     margin        : 5px 5px;
-    background    : #000066;     /* 背景色     */
-    color         : #ffffff;     /* 文字色     */
-    line-height   : 1em;         /* 1行の高さ  */
-    transition    : .3s;         /* なめらか変化 */
-    box-shadow    : 6px 6px 3px #666666;  /* 影の設定 */
-    border        : 2px solid #000066;    /* 枠の指定 */
+    background    : #000066;
+    color         : #ffffff;
+    line-height   : 1em;
+    transition    : .3s;
+    box-shadow    : 6px 6px 3px #666666;
+    border        : 2px solid #000066;
   }
-  .button:hover {
-    box-shadow    : none;        /* カーソル時の影消去 */
-    color         : #000066;     /* 背景色     */
-    background    : #ffffff;     /* 文字色     */
+  .button2:hover {
+    box-shadow    : none;
+    color         : #000066;
+    background    : #ffffff;
   }
   .block {
     display: block;
@@ -31,28 +72,61 @@ header {background-color: rgb(221, 211, 211);
 
   label {
     display: inline-block;
-    text-align: right;
+    text-align: left;
     width: 100px;
+    word-break: keep-all;
+}
+.pro-name {
+  text-align: justify;
+}
+.style-1 {
+  width: 30%;
+}
+.img {
+  width: 50%;
+}
+.detail-img {
+  width: 100%;
+}
+.detbtn {
+  display       : inline-block;
+    border-radius : 10%;
+    font-size     : 10pt;
+    text-align    : center;
+    cursor        : pointer;
+    padding       : 12px 12px;
+    margin        : 5px 10px;
+    background    : hsla(123, 91%, 39%, 0.952);
+    color         : #ffffff;
+    line-height   : 1em;
+    transition    : .3s;
+    box-shadow    : 6px 6px 3px #666666;
+    border        : 2px solid #3b3b9c;
 }
 
+.detbtn:hover {
+  box-shadow    : none;
+  color         : #000066;
+  background    : #ffffff;
+}
 .delbtn {
     display       : inline-block;
-    border-radius : 10%;          /* 角丸       */
-    font-size     : 10pt;        /* 文字サイズ */
-    text-align    : center;      /* 文字位置   */
-    cursor        : pointer;     /* カーソル   */
-    padding       : 12px 12px;   /* 余白       */
+    border-radius : 10%;
+    font-size     : 10pt;
+    text-align    : center;
+    cursor        : pointer;
+    padding       : 12px 12px;
     margin        : 5px 10px;
-    background    : #3c3ccc;     /* 背景色     */
-    color         : #ffffff;     /* 文字色     */
-    line-height   : 1em;         /* 1行の高さ  */
-    transition    : .3s;         /* なめらか変化 */
-    box-shadow    : 6px 6px 3px #666666;  /* 影の設定 */
-    border        : 2px solid #3b3b9c;    /* 枠の指定 */
+    background    : hsl(0, 87%, 50%);
+    color         : #ffffff;
+    line-height   : 1em;
+    transition    : .3s;
+    box-shadow    : 6px 6px 3px #666666;
+    border        : 2px solid #3b3b9c;
   }
 
   .delbtn:hover {
-    box-shadow    : none;        /* カーソル時の影消去 */
-    color         : #000066;     /* 背景色     */
-    background    : #ffffff;     /* 文字色     */
+    box-shadow    : none;
+    color         : #000066;
+    background    : #ffffff;
   }

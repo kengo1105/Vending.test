@@ -3,103 +3,142 @@
 namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\ProductRequest;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Product;
 use App\Models\Company;
 
 class ProductController extends Controller
 {
     public function showList(Request $request) {
-        
         $product_model = new Product();
         $products = $product_model->getList($request);
         $company_model = new Company;
         $companies = $company_model->getList();
-        // $companies = Company::all();
-        // dd($request);
-
         return view('/products/list', [
             'products' => $products,
             'companies' => $companies
         ]);
-        
     }
-
-    public function showRegistForm() {
-        return view('regist');
-    }
-
-    public function createForm() {
-        return view('/products/create');
-    }
-
-    public function index()
-    {
-        return view('/products/index');
-    }
-
-    // public function create(Request $request)
-    // {
-    //     return view('/products/create');
-    // }
-
-    
-    public function upload(Request $request) {
-        $dir = 'storage';
-        $file_name = $request->file('image')->getClientOriginalName();
-        $request->file('image')->storeAs('public/'. $dir, $file_name);
-
-        // ファイル情報をDBに保存
-        $image = new Product();
-        $image->img_path = 'storage/' . $dir . '/' . $file_name;
-        $image->save();
-        //　リダイレクト
-        return redirect('/products');
-    }
-
     public function show(Request $request) {
         $company = new Company;
-        $companies = $company->getLists();
-        $searchWord = $request->input('searchWord');
-        $companyId = $request->input('companyId');
-
+        $companies = $company->getList();
+        $products = $request->input('product_name');
+        $company_id = $request->input('company_id');
         return view('/products/list', [
             'companies' => $companies,
-            'searchWord' => $searchWord,
-            'companyId' => $companyId
+            'product_name' => $products,
+            'company_id' => $company_id
         ]);
     }
 
     public function search(Request $request) {
-        //入力される値nameの中身を定義する
-        $searchWord = $request->input('searchWord'); //商品名の値
-        $companyId = $request->input('companyId'); //カテゴリの値
-
-        $query = Product::query();
-        //商品名が入力された場合、m_productsテーブルから一致する商品を$queryに代入
-        if (isset($searchWord)) {
-            $query->where('product_name', 'like', '%' . self::escapeLike($searchWord) . '%');
-        }
-        //カテゴリが選択された場合、m_categoriesテーブルからcategory_idが一致する商品を$queryに代入
-        if (isset($companyId)) {
-            $query->where('company_id', $companyId);
-        }
-
-        //$queryをcategory_idの昇順に並び替えて$productsに代入
-        $products = $query->orderBy('company_id', 'asc')->paginate(10);
-
-        //m_categoriesテーブルからgetLists();関数でcategory_nameとidを取得する
+        $request->product_name = $request->input('product_name');
+        $request->company_id = $request->input('company_id'); 
         $company = new Company;
         $companies = $company->getList();
-
         return view('/products/list', [
             'products' => $products,
             'companies' => $companies,
-            'searchWord' => $searchWord,
-            'companyId' => $companyId
+            'company_id' => $company_id
         ]);
     }
-    public static function escapeLike($str)
-    {
-        return str_replace(['\\', '%', '_'], ['\\\\', '\%', '\_'], $str);
+    public function showDetail($id) {
+        $products = Product::find($id);
+        if (is_null($products)) {
+            \Session::flash('err_msg', 'データがありません。');
+            return redirect(route('products.list'));
+        }
+        return view('/products/detail', [
+            'products' => $products
+        ]); 
     }
-}
+
+    public function showEdit($id) {
+        $products = Product::find($id);
+        $company_model = new Company;
+        $companies = $company_model->getList();
+        if (is_null($products)) {
+            \Session::flash('err_msg', 'データがありません。');
+            return redirect(route('products.list'));
+        }
+        return view('/products/edit', [
+            'products' => $products,
+            'companies' => $companies
+        ]); 
+    }
+
+    public function createForm() {
+        $company_model = new Company;
+        $companies = $company_model->getList();
+        
+        return view('/products/create', [
+            'companies' => $companies
+        ]);
+    }
+
+    public function store(ProductRequest $request) {
+        DB::beginTransaction();
+        try {
+            $img_name = $request->file('img_path')->getClientOriginalName();
+            if (isset($img_name)) {
+                $img_path = Storage::putFileAs('/public',$request->file('img_path'), $img_name);
+                if ($img_path) {
+                    Product::create([
+                        'company_id' => $request->company_id,
+                        'product_name' => $request->product_name,
+                        'price' => $request->price,
+                        'stock' => $request->stock,
+                        'comment' => $request->comment,
+                        'img_path' => $img_path
+                    ]);
+                }
+            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return back();
+        }
+        return redirect(route('products.list'));
+    }
+
+    public function update(ProductRequest $request) {
+        $inputs = $request -> all();
+        DB::beginTransaction();
+        try {
+            $img_name = $request->file('img_path')->getClientOriginalName();
+            if (isset($img_name)) {
+                $img_path = Storage::putFileAs('/public',$request->file('img_path'), $img_name);
+                if ($img_path) {
+                    $product_model = Product::find($inputs['id']);
+                    $product_model -> fill([
+                        'id' => $request->id,
+                        'company_id' => $request->company_id,
+                        'product_name' => $request->product_name,
+                        'price' => $request->price,
+                        'stock' => $request->stock,
+                        'comment' => $request->comment,
+                        'img_path' => $img_path
+                    ]);
+                }
+            }
+            $product_model->save();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return back();
+        }
+        return redirect(route('products.list'));
+    }
+  public function destroy(Request $request, $id) {
+    try {    
+        DB::table("products")
+        ->where('id',$id)
+        ->delete();
+        } catch (\Exception $e) {
+            return back();
+        }
+        return redirect()->route('products.list');
+    }  
+ }

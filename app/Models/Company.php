@@ -8,7 +8,10 @@ use Illuminate\Support\Facades\DB;
 
 class Company extends Model
 {
+    protected $table = 'companies';
+
     protected $fillable = [
+        'id',
         'company_name',
         'street_address',
         'representative_name',
@@ -16,10 +19,8 @@ class Company extends Model
 
     public function getList() {
         $companies = DB::table('companies');
-
         return $companies->get();
     }
-    
     public function products() {
         return $this->hasMany(Product::class);
     }

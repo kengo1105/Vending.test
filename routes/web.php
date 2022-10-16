@@ -24,16 +24,20 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::controller(ProductController::class)->group(function() {
-
+    //一覧
     Route::get('/products', [ProductController::class, 'showList'])->name('products.list');
-    Route::get('/', [ProductController::class, 'index'])->name('item.index');
-    Route::get('/products/create', [ProductController::class, 'createForm'])->name('create');
-    Route::post('/store', [ProductController::class, 'store'])->name('item.store');
-    Route::post('/upload', [ProductController::class, 'upload'])->name('store');
-    Route::get('/', 'showList')->name('form');
-    Route::get('/regist',[ProductController::class, 'showRegistForm']);
     // 検索フォーム
-    Route::get('show', [ProductController::class, 'show'])->name('show');
-    // 検索結果
-    Route::get('searchproduct', [ProductController::class, 'search'])->name('searchproduct');
+Route::get('show', [ProductController::class, 'show'])->name('show');
+// 検索結果
+Route::get('searchproduct', [ProductController::class, 'search'])->name('searchproduct');
+    //新規投稿
+    Route::get('/products/create', [ProductController::class, 'createForm'])->name('create');
+    Route::post('/products/create', [ProductController::class, 'store'])->name('product.store');
+    //詳細画面
+    Route::get('/products/{id}',[ProductController::class, 'showDetail'])->name('products.detail');
+    //編集画面
+    Route::get('/products/edit/{id}',[ProductController::class, 'showEdit'])->name('products.edit');
+    Route::post('/products/update', [ProductController::class, 'update'])->name('update');
+    //削除機能
+    Route::post('/products/delete/{id}',[ProductController::class, 'destroy'])->name('product.destroy');
  });
