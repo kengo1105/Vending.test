@@ -26,10 +26,6 @@ Route::get('/dashboard', function () {
 Route::controller(ProductController::class)->group(function() {
     //一覧
     Route::get('/products', [ProductController::class, 'showList'])->name('products.list');
-    // 検索フォーム
-Route::get('show', [ProductController::class, 'show'])->name('show');
-// 検索結果
-Route::get('searchproduct', [ProductController::class, 'search'])->name('searchproduct');
     //新規投稿
     Route::get('/products/create', [ProductController::class, 'createForm'])->name('create');
     Route::post('/products/create', [ProductController::class, 'store'])->name('product.store');

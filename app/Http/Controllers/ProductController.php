@@ -21,29 +21,7 @@ class ProductController extends Controller
             'companies' => $companies
         ]);
     }
-    public function show(Request $request) {
-        $company = new Company;
-        $companies = $company->getList();
-        $products = $request->input('product_name');
-        $company_id = $request->input('company_id');
-        return view('/products/list', [
-            'companies' => $companies,
-            'product_name' => $products,
-            'company_id' => $company_id
-        ]);
-    }
 
-    public function search(Request $request) {
-        $request->product_name = $request->input('product_name');
-        $request->company_id = $request->input('company_id'); 
-        $company = new Company;
-        $companies = $company->getList();
-        return view('/products/list', [
-            'products' => $products,
-            'companies' => $companies,
-            'company_id' => $company_id
-        ]);
-    }
     public function showDetail($id) {
         $products = Product::find($id);
         if (is_null($products)) {

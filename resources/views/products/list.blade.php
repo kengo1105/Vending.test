@@ -21,7 +21,7 @@
                 </select>
             </div>
             <div>
-                <button class="button1" type="submit">検索</button>
+                <button id="ajax_show" class="button1" type="submit">検索</button>
             </div>
         </form>
         <a class="button2" href="{{ route('create') }}">新規登録</a>
@@ -31,7 +31,7 @@
                 <p>全{{ $products->count() }}件</p>
             <table class="table table-hover">
                 <thead class="style-label">
-                <tr>
+                <tr id="all_show_result">
                 <th>ID</th>
                     <th class="style-1">商品名</th>
                     <th >画像</th>

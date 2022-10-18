@@ -6,3 +6,9 @@ function checkDelete() {
         return false;
     }
 }
+
+function getAllData() {
+    fetch('/products/show_all', {
+
+    })
+}
