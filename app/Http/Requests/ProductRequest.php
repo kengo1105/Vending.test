@@ -25,7 +25,7 @@ class ProductRequest extends FormRequest
             'product_name' => 'required | max:255 | alpha_num',
             'price' => 'required | max:1000',
             'stock' => 'required | max:1000',
-            'comment' => 'max:10000',
+            'comment' => 'max:10000'
         ];
     }
     public function attributes() {

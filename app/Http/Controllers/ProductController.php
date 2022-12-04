@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -8,10 +7,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Product;
 use App\Models\Company;
+use Log;
+
 
 class ProductController extends Controller
 {
     public function showList(Request $request) {
+        // dd($request->all());
         $product_model = new Product();
         $products = $product_model->getList($request);
         $company_model = new Company;
@@ -21,7 +23,6 @@ class ProductController extends Controller
             'companies' => $companies
         ]);
     }
-
     public function showDetail($id) {
         $products = Product::find($id);
         if (is_null($products)) {

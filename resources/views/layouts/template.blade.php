@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{ asset('css/common.css') }}" rel="stylesheet">
     <title>@yield('title')</title>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="{{ asset('/js/common.js') }}"></script>
 </head>
 <body>
-<script src="{{ asset('/js/common.js') }}"></script>
     <form method="POST" action="{{ route('logout') }}">
         @csrf
         <x-dropdown-link :href="route('logout')"
