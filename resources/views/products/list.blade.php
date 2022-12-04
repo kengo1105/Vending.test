@@ -65,15 +65,6 @@
             </div>
             @endif
         </div>
-        <div class = "footer">{*フッター部分*}
-        <div class = "footer-wrap">
-            <ul>
-                <li><a href="cat1/index.html">{$ary[0]}</a></li>
-                <li><a href="cat2/index.html">{$ary[1]}</a></li>
-                <li><a href="cat3/index.html">{$ary[2]}</a></li>
-            </ul>
-        </div>    
-    </div>
     </div>
 </div>
 @endsection
